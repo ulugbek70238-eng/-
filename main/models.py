@@ -23,3 +23,15 @@ class Theme(models.Model):
 
     def __str__(self):
         return self.name_theme
+
+
+class Cart(models.Model):
+    user_id = models.IntegerField()
+    user_product = models.ForeignKey(Theme, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'избранное'
+        verbose_name = 'избранное'
+
+    def __str__(self):
+        return f'Избранное пользователя с ID {self.user_id}'

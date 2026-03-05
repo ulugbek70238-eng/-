@@ -12,20 +12,20 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-            <span>Ташкент 24 |</span>
-        </a>
+                <span>Ташкент 24 |</span>
+            </a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
             </ul>
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" action="/search" method="post">
+            <form action="{% url 'search' %}" method="post">
                 {% csrf_token %}
-                <input name="search_product" required type="search" class="form-control form-control-dark text-bg-dark"
-                       placeholder="Search..." aria-label="Search">
+                <input name="search_product"  required type="search" class=" form-control form-control- text-dark "
+                       placeholder="Поиск" aria-label="Search">
             </form>
             {% if user.is_authenticated %}
             <div class="text-end">
-                <button type="button" class="btn btn-primary me-2">Избранное</button>
-                <a href="/logout" class="btn btn-primary">Выйти</a>
+                <a href="/cart" class="btn btn-primary me-2">Избранное</a>
+                <a href="/logout" class="btn btn-danger">Выйти</a>
             </div>
             {% else %}
             <div class="text-end">
@@ -38,20 +38,38 @@
 </header>
 <hr>
 <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-    <div
     <div class="col-10 col-sm-8 col-lg-5">
-        <img src="{{ theme3.theme_photo.url }}" class="d-block mx-lg-auto img-fluid" alt="" width="700" height="500" loading="lazy">
+        <img src="{{ theme3.theme_photo.url }}" class="d-block mx-lg-auto img-fluid" alt="" width="500" height="500"
+             loading="lazy">
     </div>
     <div class="col-lg-6">
         <div class="col-lg-6"><h1 class="display-5 fw-bold  lh-1 mb-3">{{ theme3 }}</h1>
-            <p class="lead">{{ theme3.theme_dec }}</p>
+            <p class="lead text-break">
+    {{ theme3.theme_dec }}
+</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Добавить в избранное</button>
-                <button type="button" onclick="history.back()" class="btn btn-outline-secondary text-white btn-lg px-4">Назад</button>
+
+                {% if user.is_authenticated %}
+                <form action="/add-favorite/{{ theme3.id }}/" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-primary btn-lg px-4 me-md-2">
+                        Добавить в избранное
+                    </button>
+                </form>
+                {% else %}
+                <button class="btn btn-primary btn-lg px-4 me-md-2">
+                    <a href="/accounts/login" class="btn btn-primary btn-lg px-2 me-md-1" role="button">Войдите чтобы добавить в избранное</a>
+                </button>
+                {% endif %}
+
+                <button type="button" onclick="history.back()" class="btn btn-outline-secondary text-white btn-lg px-4">
+                    Назад
+                </button>
+
             </div>
         </div>
-        </div>
     </div>
+</div>
 </div>
 
 </body>

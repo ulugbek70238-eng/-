@@ -15,15 +15,15 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
             </ul>
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" action="/search" method="post">
+            <form action="{% url 'search' %}" method="post">
                 {% csrf_token %}
-                <input name="search_product" required type="search" class="form-control form-control-dark text-bg-dark"
-                       placeholder="Search..." aria-label="Search">
+                <input name="search_product"  required type="search" class=" form-control form-control- text-dark "
+                       placeholder="Поиск" aria-label="Search">
             </form>
             {% if user.is_authenticated %}
             <div class="text-end">
-                <button type="button" class="btn btn-primary me-2">Избранное</button>
-                <a href="/logout" class="btn btn-primary">Выйти</a>
+                <a href="/cart" class="btn btn-primary me-2">Избранное</a>
+                <a href="/logout" class="btn btn-danger">Выйти</a>
             </div>
             {% else %}
             <div class="text-end">
